@@ -1,0 +1,27 @@
+doctype html 5
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no")
+
+        link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu:R,B,I,L,BI,LI&subset=Latin,Cyrillic")
+        link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu+Condensed:R,B,I,L,BI,LI&subset=Latin,Cyrillic")
+        link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=Ubuntu+Mono:R,B,I,L,BI,LI&subset=Latin,Cyrillic")
+        link(rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:R,B,I,L,BI,LI&subset=Latin,Cyrillic")
+        //- link(rel="stylesheet" href="http://afeld.github.io/emoji-css/emoji.css")
+
+        link(rel="shortcut icon" href="favicon.png" type="image/x-icon")
+        link(rel="shortcut icon" href="favicon.svg" type="image/svg+xml")
+        link(rel="mask-icon" href="favicon.svg" color="blue")
+
+        script(src="/config.js")
+
+        block head
+            title Three.js Benchmark
+
+    body
+        div#viewport
+            a-scene#scene(shadows="true" _stats="true")
+                block scene
+            div#scene-ui
+                block ui

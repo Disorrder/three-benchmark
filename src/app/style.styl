@@ -1,0 +1,50 @@
+body
+    min-height: 100vh
+    background: #FAFAFA
+    font-family: 'Ubuntu', sans-serif
+    color: white
+    font-size: 14px
+
+[ui-sref], [ng-click]
+    cursor: pointer
+
+[disabled]
+    cursor: not-allowed
+
+ul
+    list-style: none
+    padding-left: 0
+
+a
+    color: inherit
+    text-decoration: underline
+
+.ru-quotes
+    &:before
+        content: '“'
+    &:after
+        content: '”'
+
+.no-gutter > [class*="col-"], [class*="col-"].nopadding
+    padding-left: 0 !important
+    padding-right: 0 !important
+
+.space-l, .space-lr
+    &:before
+        content: ' '
+.space-r, .space-lr
+    &:after
+        content: ' '
+
+.vertical-center
+    display table
+
+    .align-item
+        display table-cell
+        height 100%
+        vertical-align middle
+
+.vertical-center-flex
+    display: flex
+    align-items: center
+    height: 100%
