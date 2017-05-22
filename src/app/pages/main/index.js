@@ -1,4 +1,5 @@
-// import Controller from
+import './style.styl';
+
 angular.module('app')
 .config(($stateProvider) => {
     $stateProvider.state('main', {

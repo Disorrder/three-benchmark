@@ -85,7 +85,7 @@ module.exports = {
             { test: /\.styl$/, use: ["style-loader", "css-loader", "stylus-loader"] },
             { test: /\.font\.(js|json)$/, use: ["style-loader", "css-loader", "fontgen-loader"] },
             {
-                test: /\.(jpeg|jpg|png|gif|woff|svg|ttf|eot)$/i,
+                test: /\.(jpeg|jpg|png|gif|woff2?|svg|ttf|eot)$/i,
                 loader: "file-loader",
                 options: {
                     name: "/[path][name].[ext]"

@@ -9,7 +9,7 @@ a-scene#scene(shadows="true" stats="true")
     a-entity#player-pivot(rotation="0 0 0")
         a-animation(delay="0" dur="30000" attribute="rotation" to="0 360 0" easing="linear" repeat="indefinite")
             
-        a-entity#player(position="0 0 20")
+        a-entity#player(position="0 0 30")
             a-camera(_fov="60")
                 //- a-entity(position="0 0 -2")
                     a-cursor(material="color: #eee; opacity: 0.8" fuse="true" fuse-timeout="1500" raycaster="objects: .interactive" cursor-events)
@@ -25,4 +25,15 @@ a-scene#scene(shadows="true" stats="true")
     a-entity#test-group(position="0 0 0")
     
 div#scene-ui
-    
+    div.ui.ui-left.panel-left.btn-group-vertical
+        b Switch to:
+        
+        button.btn.btn-default(ng-repeat="mode in page.modes" ng-click="page.setModeBtn(mode)" ng-bind="mode.name") 
+        
+    div.ui.ui-bottom.panel-bottom
+        div.result-block.col-sm-3(ng-repeat="result in page.snapshots")
+            //- pre(ng-bind="result")
+            div FPS: {{result.fps}}
+            div Entities: {{result.entities}}
+            div Faces: {{result.render.faces}}
+            div Vertices: {{result.render.vertices}}

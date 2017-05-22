@@ -1,0 +1,10 @@
+div.modal-header
+    h3.modal-title Results: {{name}}
+div.modal-body
+    ul.results-fps
+        li(ng-repeat="result in results")
+            //- pre(ng-bind="result")
+            div FPS: {{result.fps}}
+            div Entities: {{result.entities}}
+            div Faces: {{result.render.faces}}
+            div Vertices: {{result.render.vertices}}

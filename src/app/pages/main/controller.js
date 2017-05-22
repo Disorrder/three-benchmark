@@ -1,32 +1,42 @@
 import anime from 'animejs';
 
 const FPS_MAX = 60;
-const FPS_USUAL = 55;
-const FPS_STABLE = 30;
+const FPS_USUAL = 57;
+const FPS_STABLE = 33;
 const FPS_UNSTABLE = 20;
 
 export default class Controller {
-    constructor() {
-        this.scene = $('#scene')[0];
+    constructor($scope, $uibModal) {
+        this.$scope = $scope;
+        this.$uibModal = $uibModal;
 
+        this.scene = $('#scene')[0];
         this.scene.hasLoaded
             ? this.onStart()
             : this.scene.addEventListener('loaded', this.onStart.bind(this))
         ;
 
         this.testTimeline = this.getTimeline();
-
         this.testInProgress = false;
         this.snapshots = [];
+
+        this.benchmarkName = 'cubes';
+        this.modes = [
+            {
+                name: 'cubes',
+                object: '<a-box>'
+            },
+            {
+                name: 'spheres',
+                object: '<a-sphere>'
+            },
+        ]
     }
 
     onStart() {
         this.stats = this.scene.components.stats;
         console.log(this.scene, this.stats, this.fps, this.testTimeline);
-
-        for (let i=0; i < 500; i++) {
-            this.addObject();
-        }
+        this.setMode(this.modes[0]);
 
         setTimeout(this.startTest.bind(this), 2000);
     }
@@ -44,8 +54,32 @@ export default class Controller {
             fps: this.fps,
             raf: this.raf,
             entities: this.entities,
-            memory: this.scene.renderer.info.memory,
-            render: this.scene.renderer.info.render,
+            memory: Object.assign({}, this.scene.renderer.info.memory),
+            render: Object.assign({}, this.scene.renderer.info.render),
+        }
+    }
+
+    setMode(mode) {
+        if (!mode) return;
+        this.mode = mode;
+        this.initTest();
+    }
+
+    setModeBtn(mode) {
+        if (!mode) return;
+        if (this.testInProgress) this.pauseTest();
+        this.setMode(mode);
+
+        setTimeout(this.startTest.bind(this), 2000);
+    }
+
+    initTest() {
+        $('#test-group').html('');
+        this.snapshots = [];
+        this._critCurrent = 0;
+
+        for (let i=0; i < 200; i++) {
+            this.addObject();
         }
     }
 
@@ -54,16 +88,32 @@ export default class Controller {
         this.testTimeline.play();
     }
 
-    stopTest() {
+    pauseTest() {
         this.testInProgress = false;
         this.testTimeline.pause();
+    }
 
-        localStorage.setItem('benchmark.cubes', JSON.stringify(this.snapshots));
+    stopTest() {
+        this.pauseTest();
+
+        localStorage.setItem('benchmark.obj-'+this.mode.name, JSON.stringify(this.snapshots));
         this.snapshots.forEach((v) => {
             v.fps = v.fps.toFixed(2);
             v.raf = v.raf.toFixed(2);
         });
         console.log(this.snapshots);
+        // this.showResults();
+        this.$scope.$digest();
+    }
+
+    _showResults() {
+        this.$uibModal.open({
+            template: require('app/modals/results.pug')(),
+            controller: ($scope) => {
+                $scope.name = this.benchmarkName;
+                $scope.results = this.snapshots;
+            }
+        })
     }
 
     // Benchmark timeline frames
@@ -85,7 +135,7 @@ export default class Controller {
             _.random(-10, 10)
         );
 
-        $('<a-box>').attr({
+        $(this.mode.object).attr({
             position: position.toString(),
         }).appendTo('#test-group')
     }
