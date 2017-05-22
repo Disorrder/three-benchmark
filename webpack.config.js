@@ -67,6 +67,9 @@ module.exports = {
         // Tell webpack to look for required files in bower and node
         // modulesDirectories: ['../bower_components', '../node_modules'],
         // extensions: ['', '.js', '.coffee', '.json']
+        alias: {
+            vue: 'vue/dist/vue.js'
+        }
     },
     // resolveLoader: {
     //     root: path.resolve('./node_modules'),

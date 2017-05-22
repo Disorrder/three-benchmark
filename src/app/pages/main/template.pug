@@ -1,1 +1,7 @@
-extends ../../../index.pug
+//- extends ../../../index.pug
+
+a-scene#scene(shadows="true" _stats="true")
+    block scene
+        router-view
+div#scene-ui
+    block ui
