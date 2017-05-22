@@ -1,20 +1,10 @@
-// import SceneController from './scene.controller';
-//
-// $(() => {
-//     var scene = new SceneController();
-// });
-
-export default {
-    template: require('./template.pug')(),
-    data() {
-        return {
-            foo: 'bar',
-        }
-    },
-    created() {
-        console.log('created', this, this.foo);
-    },
-    mounted() {
-        console.log('mounted', this, this.foo);
-    }
-}
+// import Controller from
+angular.module('app')
+.config(($stateProvider) => {
+    $stateProvider.state('main', {
+        url: '/',
+        template: require('./template.pug')(),
+        controller: require('./controller.js').default,
+        controllerAs: 'page'
+    })
+})

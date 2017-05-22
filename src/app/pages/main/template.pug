@@ -1,7 +1,28 @@
 //- extends ../../../index.pug
 
-a-scene#scene(shadows="true" _stats="true")
-    block scene
-        router-view
+a-scene#scene(shadows="true" stats="true")
+    a-sky(color="#00000a")
+    a-light.sky_light(type="ambient" color="#fff" intensity="0.3")
+    a-light.sky_light(type="point" position="0 5 0" color="#f00" intensity="0.5")
+    a-light.sky_light(type="point" position="0 -5 0" color="#0f0" intensity="0.5")
+    
+    a-entity#player-pivot(rotation="0 0 0")
+        a-animation(delay="0" dur="30000" attribute="rotation" to="0 360 0" easing="linear" repeat="indefinite")
+            
+        a-entity#player(position="0 0 20")
+            a-camera(_fov="60")
+                //- a-entity(position="0 0 -2")
+                    a-cursor(material="color: #eee; opacity: 0.8" fuse="true" fuse-timeout="1500" raycaster="objects: .interactive" cursor-events)
+                        a-animation(begin="fusing" end="mouseleave" attribute="scale" to="2 2 2" dur="1500" easing="ease-in")
+                        a-animation(begin="fusing" end="mouseleave" attribute="geometry.thetaLength" from="360" to="0" dur="1500" easing="ease-in")
+
+                        a-animation(begin="mouseleave" attribute="scale" to="1 1 1" dur="100" easing="ease")
+                        a-animation(begin="mouseleave" attribute="geometry.thetaLength" to="360" dur="500" easing="ease")
+
+                        a-animation(begin="click" attribute="scale" from="0 0 0" to="1 1 1" _delay="100" dur="300" easing="ease")
+                        a-animation(begin="click" attribute="geometry.thetaLength" to="360" dur="100" easing="ease")
+
+    a-entity#test-group(position="0 0 0")
+    
 div#scene-ui
-    block ui
+    
