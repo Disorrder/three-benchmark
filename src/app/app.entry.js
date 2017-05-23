@@ -14,3 +14,4 @@ angular.module('app', [
 
 require('./app.run.js');
 require('./pages/main');
+require('./pages/points');
